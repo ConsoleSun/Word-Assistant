@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp" android:height="108dp"
+    android:viewportWidth="108" android:viewportHeight="108">
+    <!-- 紫色渐变圆底 -->
+    <path android:fillColor="#7c3aed"
+        android:pathData="M54,54m-42,0a42,42 0,1 1,84 0a42,42 0,1 1,-84 0"/>
+    <!-- 小号深色圆底 -->
+    <path android:fillColor="#5b21b6"
+        android:pathData="M54,54m-38,0a38,38 0,1 1,76 0a38,38 0,1 1,-76 0"/>
+    <!-- W 字母（白色粗体） -->
+    <path android:fillColor="#ffffff"
+        android:pathData="M30,35l6,22l4,-15l4,15l4,-15l4,15l6,-22h6l-8,30h-6l-4,-14l-4,14h-6l-8,-30z"/>
+    <!-- 底部小圆点装饰 -->
+    <path android:fillColor="#a78bfa"
+        android:pathData="M44,76m-2,0a2,2 0,1 1,4 0a2,2 0,1 1,-4 0"/>
+    <path android:fillColor="#a78bfa"
+        android:pathData="M54,76m-2,0a2,2 0,1 1,4 0a2,2 0,1 1,-4 0"/>
+    <path android:fillColor="#a78bfa"
+        android:pathData="M64,76m-2,0a2,2 0,1 1,4 0a2,2 0,1 1,-4 0"/>
+</vector>

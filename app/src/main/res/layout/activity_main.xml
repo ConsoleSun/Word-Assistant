@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:orientation="vertical" android:background="#0f0a2e">
+
+    <LinearLayout android:id="@+id/tabBar" android:layout_width="match_parent"
+        android:layout_height="48dp" android:orientation="horizontal"
+        android:background="#1a1535" android:padding="4dp">
+        <TextView android:id="@+id/tabSettings" android:layout_width="0dp"
+            android:layout_height="match_parent" android:text="⚙️" android:gravity="center"
+            android:layout_weight="1" android:textSize="16sp" android:textColor="#e0e7ff"
+            android:background="@drawable/tab_active"/>
+        <TextView android:id="@+id/tabAppearance" android:layout_width="0dp"
+            android:layout_height="match_parent" android:text="🎨" android:gravity="center"
+            android:layout_weight="1" android:textSize="16sp" android:textColor="#6366f1"
+            android:background="@drawable/tab_inactive"/>
+        <TextView android:id="@+id/tabResume" android:layout_width="0dp"
+            android:layout_height="match_parent" android:text="📄" android:gravity="center"
+            android:layout_weight="1" android:textSize="16sp" android:textColor="#6366f1"
+            android:background="@drawable/tab_inactive"/>
+        <TextView android:id="@+id/tabAdvanced" android:layout_width="0dp"
+            android:layout_height="match_parent" android:text="🤖" android:gravity="center"
+            android:layout_weight="1" android:textSize="16sp" android:textColor="#6366f1"
+            android:background="@drawable/tab_inactive"/>
+        <TextView android:id="@+id/tabData" android:layout_width="0dp"
+            android:layout_height="match_parent" android:text="💾" android:gravity="center"
+            android:layout_weight="1" android:textSize="16sp" android:textColor="#6366f1"
+            android:background="@drawable/tab_inactive"/>
+    </LinearLayout>
+
+    <FrameLayout android:id="@+id/pageContainer" android:layout_width="match_parent"
+        android:layout_height="0dp" android:layout_weight="1">
+
+        <!-- 设置 -->
+        <ScrollView android:id="@+id/pageSettings" android:layout_width="match_parent"
+            android:layout_height="match_parent" android:fillViewport="true">
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:orientation="vertical" android:padding="16dp">
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:text="Word助手 测试版" android:textSize="20sp" android:textStyle="bold"
+                android:textColor="#e0e7ff" android:layout_marginBottom="8dp"/>
+            <TextView android:id="@+id/btnAccessibility" android:layout_width="match_parent"
+                android:layout_height="42dp" android:text="开启无障碍权限" android:gravity="center_vertical"
+                android:textSize="12sp" android:textColor="#c4b5fd" android:paddingHorizontal="12dp"
+                android:background="@drawable/btn_secondary" android:layout_marginBottom="6dp"/>
+            <TextView android:id="@+id/btnToggleFloat" android:layout_width="match_parent"
+                android:layout_height="42dp" android:text="开启悬浮窗" android:gravity="center"
+                android:textSize="12sp" android:textColor="#fff"
+                android:background="@drawable/btn_primary" android:layout_marginBottom="14dp"/>
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:text="AI 模型" android:textSize="12sp" android:textColor="#e0e7ff"
+                android:layout_marginBottom="6dp"/>
+            <Spinner android:id="@+id/spinnerModel" android:layout_width="match_parent"
+                android:layout_height="40dp" android:entries="@array/ai_models"
+                android:background="@drawable/input_bg" android:layout_marginBottom="6dp"/>
+            <EditText android:id="@+id/etApiKey" android:layout_width="match_parent"
+                android:layout_height="wrap_content" android:hint="API Key" android:inputType="textPassword"
+                android:textSize="12sp" android:textColorHint="#6366f1" android:textColor="#e0e7ff"
+                android:background="@drawable/input_bg" android:padding="10dp"
+                android:layout_marginBottom="6dp"/>
+            <Spinner android:id="@+id/spinnerMode" android:layout_width="match_parent"
+                android:layout_height="40dp" android:entries="@array/reply_modes"
+                android:background="@drawable/input_bg" android:layout_marginBottom="14dp"/>
+            <TextView android:id="@+id/btnSave" android:layout_width="match_parent"
+                android:layout_height="42dp" android:text="保存设置" android:gravity="center"
+                android:textSize="12sp" android:textColor="#fff"
+                android:background="@drawable/btn_primary"/>
+        </LinearLayout>
+        </ScrollView>
+
+        <!-- 外观 -->
+        <ScrollView android:id="@+id/pageAppearance" android:layout_width="match_parent"
+            android:layout_height="match_parent" android:visibility="gone">
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:orientation="vertical" android:padding="16dp">
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:text="外观" android:textSize="18sp" android:textStyle="bold"
+                android:textColor="#e0e7ff" android:layout_marginBottom="20dp"/>
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:text="悬浮窗透明度" android:textSize="12sp"
+                android:textColor="#c4b5fd" android:layout_marginBottom="8dp"/>
+            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:orientation="horizontal" android:gravity="center_vertical"
+                android:background="@drawable/input_bg" android:padding="12dp">
+                <SeekBar android:id="@+id/seekbarOpacity" android:layout_width="0dp"
+                    android:layout_height="wrap_content" android:layout_weight="1"
+                    android:max="100" android:progress="55"/>
+                <TextView android:id="@+id/tvOpacityValue" android:layout_width="50dp"
+                    android:layout_height="wrap_content" android:text="55%" android:gravity="center"
+                    android:textSize="12sp" android:textColor="#c4b5fd"/>
+            </LinearLayout>
+        </LinearLayout>
+        </ScrollView>
+
+        <!-- 简历 -->
+        <ScrollView android:id="@+id/pageResume" android:layout_width="match_parent"
+            android:layout_height="match_parent" android:visibility="gone">
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:orientation="vertical" android:padding="16dp">
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:text="简历" android:textSize="18sp" android:textStyle="bold"
+                android:textColor="#e0e7ff" android:layout_marginBottom="16dp"/>
+            <TextView android:id="@+id/btnPickPdf" android:layout_width="match_parent"
+                android:layout_height="42dp" android:text="从剪贴板粘贴" android:gravity="center_vertical"
+                android:textSize="12sp" android:textColor="#c4b5fd" android:paddingHorizontal="12dp"
+                android:background="@drawable/btn_secondary" android:layout_marginBottom="6dp"/>
+            <EditText android:id="@+id/etResumeText" android:layout_width="match_parent"
+                android:layout_height="200dp" android:hint="或手动输入简历..."
+                android:textColorHint="#6366f1" android:textColor="#e0e7ff"
+                android:gravity="top" android:textSize="12sp" android:padding="10dp"
+                android:background="@drawable/input_bg" android:layout_marginBottom="6dp"
+                android:inputType="textMultiLine" android:scrollbars="vertical"/>
+            <TextView android:id="@+id/btnParseResume" android:layout_width="match_parent"
+                android:layout_height="42dp" android:text="AI 解析简历" android:gravity="center"
+                android:textSize="12sp" android:textColor="#fff"
+                android:background="@drawable/btn_primary" android:layout_marginBottom="4dp"/>
+            <TextView android:id="@+id/tvResumeStatus" android:layout_width="match_parent"
+                android:layout_height="wrap_content" android:textSize="11sp"
+                android:textColor="#6366f1"/>
+        </LinearLayout>
+        </ScrollView>
+
+        <!-- 高级 -->
+        <ScrollView android:id="@+id/pageAdvanced" android:layout_width="match_parent"
+            android:layout_height="match_parent" android:visibility="gone">
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:orientation="vertical" android:padding="16dp">
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:text="高级" android:textSize="18sp" android:textStyle="bold"
+                android:textColor="#e0e7ff" android:layout_marginBottom="16dp"/>
+            <Spinner android:id="@+id/spinnerAiRole" android:layout_width="match_parent"
+                android:layout_height="40dp" android:entries="@array/ai_roles"
+                android:background="@drawable/input_bg" android:layout_marginBottom="8dp"/>
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:text="系统提示词" android:textSize="12sp" android:textColor="#e0e7ff"
+                android:layout_marginBottom="4dp"/>
+            <EditText android:id="@+id/etSystemPrompt" android:layout_width="match_parent"
+                android:layout_height="150dp" android:gravity="top"
+                android:textColorHint="#6366f1" android:textColor="#e0e7ff"
+                android:textSize="11sp" android:background="@drawable/input_bg"
+                android:padding="10dp" android:layout_marginBottom="6dp"
+                android:inputType="textMultiLine"/>
+            <EditText android:id="@+id/etCustomRole" android:layout_width="match_parent"
+                android:layout_height="wrap_content" android:hint="自定义角色（如：资深前端工程师）"
+                android:textColorHint="#6366f1" android:textColor="#e0e7ff"
+                android:textSize="12sp" android:background="@drawable/input_bg"
+                android:padding="10dp" android:layout_marginBottom="6dp"
+                android:visibility="gone"/>
+            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:orientation="horizontal" android:layout_marginBottom="4dp">
+                <TextView android:id="@+id/btnRestorePrompt" android:layout_width="0dp"
+                    android:layout_height="38dp" android:text="恢复默认" android:gravity="center"
+                    android:layout_weight="1" android:layout_marginEnd="4dp"
+                    android:textSize="12sp" android:textColor="#c4b5fd"
+                    android:background="@drawable/btn_secondary"/>
+                <TextView android:id="@+id/btnSavePrompt" android:layout_width="0dp"
+                    android:layout_height="38dp" android:text="保存提示词" android:gravity="center"
+                    android:layout_weight="1" android:layout_marginStart="4dp"
+                    android:textSize="12sp" android:textColor="#fff"
+                    android:background="@drawable/btn_primary"/>
+            </LinearLayout>
+            <TextView android:id="@+id/tvPromptStatus" android:layout_width="match_parent"
+                android:layout_height="wrap_content" android:textSize="11sp"
+                android:textColor="#6366f1"/>
+        </LinearLayout>
+        </ScrollView>
+
+        <!-- 数据 -->
+        <ScrollView android:id="@+id/pageData" android:layout_width="match_parent"
+            android:layout_height="match_parent" android:visibility="gone">
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:orientation="vertical" android:padding="16dp">
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:text="数据管理" android:textSize="18sp" android:textStyle="bold"
+                android:textColor="#e0e7ff" android:layout_marginBottom="16dp"/>
+            <TextView android:id="@+id/btnClearJobs" android:layout_width="match_parent"
+                android:layout_height="42dp" android:text="清空所有岗位" android:gravity="center"
+                android:textSize="13sp" android:textColor="#f87171"
+                android:background="@drawable/btn_secondary" android:layout_marginBottom="16dp"/>
+            <View android:layout_width="match_parent" android:layout_height="1dp"
+                android:background="#1e1b4b" android:layout_marginBottom="16dp"/>
+            <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:text="免责声明" android:textSize="13sp" android:textStyle="bold"
+                android:textColor="#e0e7ff" android:layout_marginBottom="8dp"/>
+            <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:text="本软件仅供学习和技术研究使用。使用者应遵守相关平台的服务协议，自行承担使用过程中产生的一切后果。开发者不对用户的任何行为负责。"
+                android:textSize="11sp" android:textColor="#6366f1" android:lineSpacingExtra="2dp"
+                android:layout_marginBottom="8dp"/>
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:text="仅供学习参考 · v1.0" android:textSize="11sp"
+                android:textColor="#4338ca"/>
+        </LinearLayout>
+        </ScrollView>
+    </FrameLayout>
+</LinearLayout>

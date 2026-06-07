@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="290dp" android:layout_height="wrap_content"
+    android:orientation="vertical" android:background="@drawable/panel_bg"
+    android:padding="0dp">
+
+    <LinearLayout android:id="@+id/panelHeader"
+        android:layout_width="match_parent" android:layout_height="46dp"
+        android:orientation="horizontal" android:gravity="center_vertical"
+        android:paddingHorizontal="14dp"
+        android:background="@drawable/panel_header_bg">
+        <TextView android:layout_width="0dp" android:layout_height="wrap_content"
+            android:text="历史记录" android:textSize="15sp" android:textStyle="bold"
+            android:textColor="#e0e7ff" android:layout_weight="1"/>
+        <TextView android:id="@+id/btnClose" android:layout_width="32dp"
+            android:layout_height="32dp" android:text="✕" android:textSize="14sp"
+            android:textColor="#6366f1" android:gravity="center"
+            android:background="@android:color/transparent"/>
+    </LinearLayout>
+
+    <TextView android:id="@+id/btnCapture" android:layout_width="match_parent"
+        android:layout_height="44dp" android:text="📸  抓取当前页面JD"
+        android:textSize="13sp" android:textColor="#fff" android:gravity="center"
+        android:background="@drawable/btn_primary" android:clickable="true"
+        android:focusable="true" android:layout_margin="10dp"/>
+
+    <ScrollView android:layout_width="match_parent" android:layout_height="240dp"
+        android:background="#00000000">
+        <LinearLayout android:id="@+id/jobListContainer"
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:orientation="vertical" android:padding="8dp"/>
+    </ScrollView>
+
+    <TextView android:id="@+id/tvJobStatus" android:layout_width="match_parent"
+        android:layout_height="wrap_content" android:text="暂无保存的岗位"
+        android:textSize="12sp" android:textColor="#6366f1" android:gravity="center"
+        android:padding="20dp" android:visibility="visible"/>
+</LinearLayout>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="ai_models">
+        <item>DeepSeek</item>
+        <item>MiMo 2.5</item>
+    </string-array>
+    <string-array name="ai_roles">
+        <item>👤 求职人</item>
+        <item>✏️ 自定义</item>
+    </string-array>
+    <string-array name="reply_modes">
+        <item>💼 专业模式</item>
+        <item>😊 拟人模式</item>
+    </string-array>
+    <string name="accessibility_desc">用于读取招聘App页面中的职位信息</string>
+    <string name="app_name">Word助手 测试版</string>
+    <style name="AppTheme" parent="Theme.AppCompat.DayNight.NoActionBar">
+        <item name="colorPrimary">#238636</item>
+        <item name="colorPrimaryDark">#0d1117</item>
+        <item name="colorAccent">#58a6ff</item>
+        <item name="android:textColor">#c9d1d9</item>
+        <item name="android:windowBackground">#0d1117</item>
+        <item name="android:textColorPrimary">#c9d1d9</item>
+    </style>
+</resources>

@@ -1,0 +1,78 @@
+[
+    {
+        "merged": "C:\\Users\\sunjunshuai\\.gradle\\daemon\\8.4\\com.hireassistant.app-merged_res-35:\\mipmap-anydpi-v26_ic_launcher_round.xml.flat",
+        "source": "C:\\Users\\sunjunshuai\\.gradle\\daemon\\8.4\\com.hireassistant.app-main-37:\\mipmap-anydpi-v26\\ic_launcher_round.xml"
+    },
+    {
+        "merged": "C:\\Users\\sunjunshuai\\.gradle\\daemon\\8.4\\com.hireassistant.app-merged_res-35:\\drawable_ic_launcher_foreground.xml.flat",
+        "source": "C:\\Users\\sunjunshuai\\.gradle\\daemon\\8.4\\com.hireassistant.app-main-37:\\drawable\\ic_launcher_foreground.xml"
+    },
+    {
+        "merged": "C:\\Users\\sunjunshuai\\.gradle\\daemon\\8.4\\com.hireassistant.app-merged_res-35:\\layout_panel_chat.xml.flat",
+        "source": "C:\\Users\\sunjunshuai\\.gradle\\daemon\\8.4\\com.hireassistant.app-main-37:\\layout\\panel_chat.xml"
+    },
+    {
+        "merged": "C:\\Users\\sunjunshuai\\.gradle\\daemon\\8.4\\com.hireassistant.app-merged_res-35:\\drawable_ic_launcher_background.xml.flat",
+        "source": "C:\\Users\\sunjunshuai\\.gradle\\daemon\\8.4\\com.hireassistant.app-main-37:\\drawable\\ic_launcher_background.xml"
+    },
+    {
+        "merged": "com.hireassistant.app-merged_res-35:/drawable_ic_launcher_foreground.xml.flat",
+        "source": "com.hireassistant.app-main-37:/drawable/ic_launcher_foreground.xml"
+    },
+    {
+        "merged": "C:\\Users\\sunjunshuai\\.gradle\\daemon\\8.4\\com.hireassistant.app-merged_res-35:\\drawable_btn_primary.xml.flat",
+        "source": "C:\\Users\\sunjunshuai\\.gradle\\daemon\\8.4\\com.hireassistant.app-main-37:\\drawable\\btn_primary.xml"
+    },
+    {
+        "merged": "C:\\Users\\sunjunshuai\\.gradle\\daemon\\8.4\\com.hireassistant.app-merged_res-35:\\mipmap-anydpi-v26_ic_launcher.xml.flat",
+        "source": "C:\\Users\\sunjunshuai\\.gradle\\daemon\\8.4\\com.hireassistant.app-main-37:\\mipmap-anydpi-v26\\ic_launcher.xml"
+    },
+    {
+        "merged": "C:\\Users\\sunjunshuai\\.gradle\\daemon\\8.4\\com.hireassistant.app-merged_res-35:\\drawable_job_card_bg.xml.flat",
+        "source": "C:\\Users\\sunjunshuai\\.gradle\\daemon\\8.4\\com.hireassistant.app-main-37:\\drawable\\job_card_bg.xml"
+    },
+    {
+        "merged": "C:\\Users\\sunjunshuai\\.gradle\\daemon\\8.4\\com.hireassistant.app-merged_res-35:\\drawable_panel_header_bg.xml.flat",
+        "source": "C:\\Users\\sunjunshuai\\.gradle\\daemon\\8.4\\com.hireassistant.app-main-37:\\drawable\\panel_header_bg.xml"
+    },
+    {
+        "merged": "C:\\Users\\sunjunshuai\\.gradle\\daemon\\8.4\\com.hireassistant.app-merged_res-35:\\drawable_tab_inactive.xml.flat",
+        "source": "C:\\Users\\sunjunshuai\\.gradle\\daemon\\8.4\\com.hireassistant.app-main-37:\\drawable\\tab_inactive.xml"
+    },
+    {
+        "merged": "C:\\Users\\sunjunshuai\\.gradle\\daemon\\8.4\\com.hireassistant.app-merged_res-35:\\layout_panel_job_list.xml.flat",
+        "source": "C:\\Users\\sunjunshuai\\.gradle\\daemon\\8.4\\com.hireassistant.app-main-37:\\layout\\panel_job_list.xml"
+    },
+    {
+        "merged": "C:\\Users\\sunjunshuai\\.gradle\\daemon\\8.4\\com.hireassistant.app-merged_res-35:\\drawable_tab_active.xml.flat",
+        "source": "C:\\Users\\sunjunshuai\\.gradle\\daemon\\8.4\\com.hireassistant.app-main-37:\\drawable\\tab_active.xml"
+    },
+    {
+        "merged": "com.hireassistant.app-merged_res-35:/drawable_ic_launcher_background.xml.flat",
+        "source": "com.hireassistant.app-main-37:/drawable/ic_launcher_background.xml"
+    },
+    {
+        "merged": "C:\\Users\\sunjunshuai\\.gradle\\daemon\\8.4\\com.hireassistant.app-merged_res-35:\\drawable_btn_secondary.xml.flat",
+        "source": "C:\\Users\\sunjunshuai\\.gradle\\daemon\\8.4\\com.hireassistant.app-main-37:\\drawable\\btn_secondary.xml"
+    },
+    {
+        "merged": "C:\\Users\\sunjunshuai\\.gradle\\daemon\\8.4\\com.hireassistant.app-merged_res-35:\\drawable_panel_bg.xml.flat",
+        "source": "C:\\Users\\sunjunshuai\\.gradle\\daemon\\8.4\\com.hireassistant.app-main-37:\\drawable\\panel_bg.xml"
+    },
+    {
+        "merged": "C:\\Users\\sunjunshuai\\.gradle\\daemon\\8.4\\com.hireassistant.app-merged_res-35:\\drawable_job_card_pinned.xml.flat",
+        "source": "C:\\Users\\sunjunshuai\\.gradle\\daemon\\8.4\\com.hireassistant.app-main-37:\\drawable\\job_card_pinned.xml"
+    },
+    {
+        "merged": "C:\\Users\\sunjunshuai\\.gradle\\daemon\\8.4\\com.hireassistant.app-merged_res-35:\\xml_accessibility_config.xml.flat",
+        "source": "C:\\Users\\sunjunshuai\\.gradle\\daemon\\8.4\\com.hireassistant.app-main-37:\\xml\\accessibility_config.xml"
+    },
+    {
+        "merged": "C:\\Users\\sunjunshuai\\.gradle\\daemon\\8.4\\com.hireassistant.app-merged_res-35:\\layout_activity_main.xml.flat",
+        "source": "C:\\Users\\sunjunshuai\\.gradle\\daemon\\8.4\\com.hireassistant.app-main-37:\\layout\\activity_main.xml"
+    },
+    {
+        "merged": "C:\\Users\\sunjunshuai\\.gradle\\daemon\\8.4\\com.hireassistant.app-merged_res-35:\\drawable_input_bg.xml.flat",
+        "source": "C:\\Users\\sunjunshuai\\.gradle\\daemon\\8.4\\com.hireassistant.app-main-37:\\drawable\\input_bg.xml"
+    }
+]
