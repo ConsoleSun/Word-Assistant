@@ -79,6 +79,56 @@ class FloatingService : Service() {
         // 抓JD按钮
         panel.findViewById<TextView>(R.id.btnCapture).setOnClickListener { captureJD(panel) }
 
+        // 新建空记录
+        panel.findViewById<TextView>(R.id.btnNewChat).setOnClickListener {
+            val input = android.widget.EditText(this).apply {
+                hint = "输入对话名称"; setTextColor(0xFFFFFFFF.toInt())
+                setHintTextColor(0xFF888888.toInt())
+            }
+            // 直接在面板顶部显示输入框
+            val container = panel.findViewById<LinearLayout>(R.id.jobListContainer)
+            val status = panel.findViewById<TextView>(R.id.tvJobStatus)
+            status?.visibility = View.GONE
+            container?.removeAllViews()
+            val wrapper = LinearLayout(this).apply {
+                orientation = LinearLayout.VERTICAL
+                setPadding(8,8,8,8)
+                addView(input)
+                val btnRow = LinearLayout(this@FloatingService).apply {
+                    orientation = LinearLayout.HORIZONTAL
+                    setPadding(0,8,0,0)
+                }
+                val btnCreate = Button(this@FloatingService).apply {
+                    text = "创建"; setTextColor(0xFFFFFFFF.toInt())
+                    setBackgroundColor(0xFF238636.toInt())
+                    setOnClickListener {
+                        val name = input.text.toString().trim()
+                        if (name.isEmpty()) { Toast.makeText(this@FloatingService,"请输入名称",Toast.LENGTH_SHORT).show(); return@setOnClickListener }
+                        val json = org.json.JSONObject().apply {
+                            put("position", name); put("company", ""); put("salary", "")
+                            put("location", ""); put("description", ""); put("requirements", "")
+                            put("pinned", false); put("savedAt", System.currentTimeMillis())
+                            put("isChatOnly", true)
+                        }
+                        val jobs = loadJobs().toMutableList()
+                        jobs.add(0, json)
+                        saveJobs(jobs)
+                        refreshJobList(panel)
+                        Toast.makeText(this@FloatingService, "已创建: $name", Toast.LENGTH_SHORT).show()
+                    }
+                }
+                val btnCancel = Button(this@FloatingService).apply {
+                    text = "取消"; setTextColor(0xFFCCCCCC.toInt())
+                    setBackgroundColor(0xFF333333.toInt())
+                    setOnClickListener { refreshJobList(panel) }
+                }
+                btnRow.addView(btnCreate)
+                btnRow.addView(btnCancel)
+                addView(btnRow)
+            }
+            container?.addView(wrapper)
+        }
+
         refreshJobList(panel)
         addPanel(panel)
     }
@@ -95,12 +145,16 @@ class FloatingService : Service() {
 
         title.text = job.optString("position", "AI 助手").take(15)
 
-        // 用 HTML 区分不同内容
-        val jdText = "<b>📋 ${job.optString("position")}</b><br>" +
-            "🏢 ${job.optString("company")} | 💰 ${job.optString("salary")} | 📍 ${job.optString("location")}<br>" +
-            "<br><i>📝 职责:</i><br><small>${job.optString("description","")}</small><br>" +
-            "<br><i>✅ 要求:</i><br><small>${job.optString("requirements","")}</small>"
-        out.text = android.text.Html.fromHtml(jdText, android.text.Html.FROM_HTML_MODE_LEGACY)
+        // 区分空记录和岗位记录
+        if (job.optBoolean("isChatOnly", false)) {
+            out.text = "💬 ${job.optString("position")}\n（自由对话模式）"
+        } else {
+            val jdText = "<b>📋 ${job.optString("position")}</b><br>" +
+                "🏢 ${job.optString("company")} | 💰 ${job.optString("salary")} | 📍 ${job.optString("location")}<br>" +
+                "<br><i>📝 职责:</i><br><small>${job.optString("description","")}</small><br>" +
+                "<br><i>✅ 要求:</i><br><small>${job.optString("requirements","")}</small>"
+            out.text = android.text.Html.fromHtml(jdText, android.text.Html.FROM_HTML_MODE_LEGACY)
+        }
 
         // 历史对话
         val history = store.get("chat_${job.optString("position")}_${job.optString("company")}", "")
