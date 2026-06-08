@@ -159,10 +159,13 @@ class MainActivity : AppCompatActivity() {
                 etCustomRole.visibility = View.GONE
                 etPrompt.setText(DEFAULT_SYSTEM_PROMPT)
                 storage.put("ai_custom_role", "")
+                storage.put("system_prompt", "")
             } else {
                 etCustomRole.visibility = View.GONE
-                etPrompt.setText(customRoles[roleName] ?: DEFAULT_SYSTEM_PROMPT)
+                val prompt = customRoles[roleName] ?: DEFAULT_SYSTEM_PROMPT
+                etPrompt.setText(prompt)
                 storage.put("ai_custom_role", roleName)
+                storage.put("system_prompt", prompt)  // 同时保存，确保 AIHelper 读取生效
             }
         }
 
