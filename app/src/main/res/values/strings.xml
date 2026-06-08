@@ -12,6 +12,5 @@
     </string-array>
     <string-array name="ai_roles">
         <item>👤 求职人</item>
-        <item>✏️ 自定义</item>
     </string-array>
 </resources>

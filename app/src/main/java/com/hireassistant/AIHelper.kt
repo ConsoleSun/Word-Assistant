@@ -25,23 +25,30 @@ class AIHelper(private val store: StorageManager) {
     private fun key() = store.get("api_key","")
 
     private fun systemPrompt(): String {
-        // 优先使用用户自定义的提示词
+        // 优先使用用户保存的提示词
         val customPrompt = store.get("system_prompt", "")
+        val customRole = store.get("ai_custom_role", "")
+        if (customRole.isNotEmpty()) {
+            // 查找该角色的自定义提示词
+            val rolesJson = store.get("custom_roles", "{}")
+            try {
+                val obj = org.json.JSONObject(rolesJson)
+                val rolePrompt = obj.optString(customRole, "")
+                if (rolePrompt.isNotEmpty()) {
+                    val mode = store.get("reply_mode","professional")
+                    val style = if (mode == "human") " 风格：口语化自然。" else " 风格：简洁专业。"
+                    return rolePrompt + style
+                }
+            } catch (_: Exception) {}
+        }
         if (customPrompt.isNotEmpty() && customPrompt.length >= 10) {
             val mode = store.get("reply_mode","professional")
             val style = if (mode == "human") " 风格：口语化自然。" else " 风格：简洁专业。"
             return customPrompt + style
         }
-        // 默认
+        // 默认求职人
         val mode = store.get("reply_mode","professional")
-        val roleIdx = store.getInt("ai_role_index", 0)
-        val roleDesc = when (roleIdx) {
-            1 -> store.get("ai_custom_role", "").take(100)
-            else -> "求职人"
-        }
-        val roleText = if (roleDesc.isNotEmpty() && roleDesc != "求职人")
-            "用户身份是：$roleDesc。" else ""
-        val prefix = "你是用户的写作助手。$roleText 需要帮忙起草回复。"
+        val prefix = "你是用户的求职写作助手。需要帮忙起草回复。"
         return if (mode == "human") "$prefix 口语化自然。直接返回内容。" else "$prefix 简洁专业。直接返回内容。"
     }
 

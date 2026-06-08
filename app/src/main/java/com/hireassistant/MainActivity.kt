@@ -139,51 +139,98 @@ class MainActivity : AppCompatActivity() {
         val savedPrompt = storage.get("system_prompt", "")
         etPrompt.setText(if (savedPrompt.isNotEmpty()) savedPrompt else DEFAULT_SYSTEM_PROMPT)
 
-        // AI 角色
+        // AI 角色 — 动态管理
         val spinnerAiRole = findViewById<Spinner>(R.id.spinnerAiRole)
         val etCustomRole = findViewById<EditText>(R.id.etCustomRole)
-        spinnerAiRole.setSelection(storage.getInt("ai_role_index", 0))
-        etCustomRole.setText(storage.get("ai_custom_role", ""))
-        etCustomRole.visibility = if (spinnerAiRole.selectedItemPosition == 1) View.VISIBLE else View.GONE
+        var customRoles = loadCustomRoles()
+
+        fun refreshRoleSpinner(selectLast: Boolean = false) {
+            val items = mutableListOf("👤 求职人")
+            items.addAll(customRoles.keys)
+            items.add("+ 新增自定义")
+            val adapter = ArrayAdapter(this@MainActivity, android.R.layout.simple_spinner_item, items)
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+            spinnerAiRole.adapter = adapter
+            if (selectLast && items.size > 2) spinnerAiRole.setSelection(items.size - 2)
+        }
+
+        fun loadRole(roleName: String) {
+            if (roleName == "👤 求职人" || roleName.startsWith("+")) {
+                etCustomRole.visibility = View.GONE
+                etPrompt.setText(DEFAULT_SYSTEM_PROMPT)
+                storage.put("ai_custom_role", "")
+            } else {
+                etCustomRole.visibility = View.GONE
+                etPrompt.setText(customRoles[roleName] ?: DEFAULT_SYSTEM_PROMPT)
+                storage.put("ai_custom_role", roleName)
+            }
+        }
+
+        refreshRoleSpinner()
+        val savedRole = storage.get("ai_custom_role", "")
+        if (savedRole.isNotEmpty() && customRoles.containsKey(savedRole)) {
+            val idx = (listOf("👤 求职人") + customRoles.keys.toList()).indexOf(savedRole)
+            if (idx > 0) spinnerAiRole.setSelection(idx)
+        }
+        etCustomRole.visibility = View.GONE
+
         spinnerAiRole.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, pos: Int, id: Long) {
-                storage.putInt("ai_role_index", pos)
-                if (pos == 1) {
+                val items = (spinnerAiRole.adapter as ArrayAdapter<String>)
+                val selected = items.getItem(pos) ?: return
+                if (selected == "+ 新增自定义") {
                     etCustomRole.visibility = View.VISIBLE
-                    etCustomRole.hint = "输入AI职业身份，如：资深前端工程师"
-                } else {
-                    etCustomRole.visibility = View.GONE
+                    etCustomRole.hint = "输入角色名称，如：资深前端工程师"
                     etCustomRole.text.clear()
-                    storage.put("ai_custom_role", "")
                     etPrompt.setText(DEFAULT_SYSTEM_PROMPT)
                     tvPromptStatus.text = ""
+                } else {
+                    loadRole(selected)
                 }
             }
             override fun onNothingSelected(parent: AdapterView<*>?) {}
         }
 
-        // 保存提示词
+        // 删除当前选中的自定义角色
+        findViewById<TextView>(R.id.btnRestorePrompt).setOnClickListener {
+            val items = spinnerAiRole.adapter as ArrayAdapter<String>
+            val selected = items.getItem(spinnerAiRole.selectedItemPosition) ?: ""
+            if (selected != "👤 求职人" && !selected.startsWith("+")) {
+                customRoles.remove(selected)
+                saveCustomRoles(customRoles)
+                refreshRoleSpinner()
+                spinnerAiRole.setSelection(0)
+                loadRole("👤 求职人")
+                tvPromptStatus.text = "已删除「$selected」"
+            } else {
+                etPrompt.setText(DEFAULT_SYSTEM_PROMPT)
+                tvPromptStatus.text = "🔄 已恢复默认"
+            }
+        }
+        (findViewById<TextView>(R.id.btnRestorePrompt)).text = "🗑 删除/恢复"
+
+        // 保存提示词（含自定义角色）
         findViewById<TextView>(R.id.btnSavePrompt).setOnClickListener {
             val text = etPrompt.text.toString().trim()
             if (text.length < 10) {
                 tvPromptStatus.text = "❌ 提示词过短，至少10字"
                 return@setOnClickListener
             }
-            if (!text.contains("回复") && !text.contains("生成") && !text.contains("起草")) {
-                tvPromptStatus.text = "⚠️ 提示词需包含回复/生成/起草等关键词"
-                return@setOnClickListener
+            val roleName = etCustomRole.text.toString().trim()
+            if (etCustomRole.visibility == View.VISIBLE && roleName.isNotEmpty()) {
+                // 保存新自定义角色
+                customRoles[roleName] = text
+                saveCustomRoles(customRoles)
+                storage.put("system_prompt", text)
+                storage.put("ai_custom_role", roleName)
+                refreshRoleSpinner(true)
+                etCustomRole.visibility = View.GONE
+                etCustomRole.text.clear()
+                tvPromptStatus.text = "✅ 已保存角色「$roleName」"
+            } else {
+                storage.put("system_prompt", text)
+                tvPromptStatus.text = "✅ 提示词已保存，已应用到AI"
             }
-            storage.put("system_prompt", text)
-            val role = etCustomRole.text.toString().trim()
-            storage.put("ai_custom_role", role)
-            tvPromptStatus.text = if (role.isNotEmpty()) "✅ 已保存！AI将以「$role」身份回复"
-                                 else "✅ 提示词已保存，已应用到AI"
-        }
-
-        // 恢复默认
-        findViewById<TextView>(R.id.btnRestorePrompt).setOnClickListener {
-            etPrompt.setText(DEFAULT_SYSTEM_PROMPT)
-            tvPromptStatus.text = "🔄 已恢复默认，请点击保存"
         }
 
         // 透明度
@@ -287,5 +334,21 @@ class MainActivity : AppCompatActivity() {
         } catch (e: Exception) {
             tvResumeStatus.text = "❌ 读取失败: ${e.message}"
         }
+    }
+
+    private fun loadCustomRoles(): MutableMap<String, String> {
+        val json = storage.get("custom_roles", "{}")
+        return try {
+            val obj = org.json.JSONObject(json)
+            val map = mutableMapOf<String, String>()
+            obj.keys().forEach { map[it] = obj.getString(it) }
+            map
+        } catch (e: Exception) { mutableMapOf() }
+    }
+
+    private fun saveCustomRoles(roles: Map<String, String>) {
+        val obj = org.json.JSONObject()
+        roles.forEach { (k, v) -> obj.put(k, v) }
+        storage.put("custom_roles", obj.toString())
     }
 }
