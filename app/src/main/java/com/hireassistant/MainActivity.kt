@@ -153,6 +153,8 @@ class MainActivity : AppCompatActivity() {
                     etCustomRole.hint = "输入AI职业身份，如：资深前端工程师"
                 } else {
                     etCustomRole.visibility = View.GONE
+                    etCustomRole.text.clear()
+                    storage.put("ai_custom_role", "")
                     etPrompt.setText(DEFAULT_SYSTEM_PROMPT)
                     tvPromptStatus.text = ""
                 }

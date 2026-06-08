@@ -295,17 +295,11 @@ class FloatingService : Service() {
             val delBtn = Button(this).apply {
                 text = "🗑"; setBackgroundColor(android.graphics.Color.TRANSPARENT)
                 setOnClickListener {
-                    AlertDialog.Builder(this@FloatingService)
-                        .setTitle("确认删除")
-                        .setMessage("删除「${job.optString("position")}」？")
-                        .setPositiveButton("删除") { _, _ ->
-                            val jobs2 = loadJobs().toMutableList()
-                            jobs2.removeAll { it.optString("position")==job.optString("position") && it.optString("company")==job.optString("company") }
-                            saveJobs(jobs2)
-                            refreshJobList(panel)
-                        }
-                        .setNegativeButton("取消", null)
-                        .show()
+                    val jobs2 = loadJobs().toMutableList()
+                    jobs2.removeAll { it.optString("position")==job.optString("position") && it.optString("company")==job.optString("company") }
+                    saveJobs(jobs2)
+                    refreshJobList(panel)
+                    Toast.makeText(this@FloatingService, "已删除: ${job.optString("position")}", Toast.LENGTH_SHORT).show()
                 }
             }
             item.addView(textView); item.addView(pinBtn); item.addView(delBtn)
