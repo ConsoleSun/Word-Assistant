@@ -76,45 +76,30 @@ class ScreenReaderService : AccessibilityService() {
 
     /** 将文字填入招聘App的输入框（自动跳过自己的窗口） */
     fun fillToInput(text: String): Boolean {
-        // 方式1: 遍历所有窗口
-        val allWindows = windows
-        if (allWindows != null) {
-            for (i in 0 until allWindows.size) {
-                val w = allWindows[i] ?: continue
-                val root = w.root ?: continue
-                val pn = root.packageName?.toString() ?: ""
-                if (pn.contains("hireassistant")) { root.recycle(); continue }
-                if (tryFillNode(root, text)) return true
-                root.recycle()
-            }
-        }
-        // 方式2: 回退到活跃窗口
-        val activeRoot = rootInActiveWindow
-        if (activeRoot != null) {
-            val pn = activeRoot.packageName?.toString() ?: ""
-            if (!pn.contains("hireassistant")) {
-                if (tryFillNode(activeRoot, text)) return true
-            }
-            activeRoot.recycle()
-        }
-        return false
-    }
+        val allWindows = windows ?: return false
+        for (i in 0 until allWindows.size) {
+            val w = allWindows[i] ?: continue
+            val root = w.root ?: continue
+            // 跳过自己的窗口
+            val pn = root.packageName?.toString() ?: ""
+            if (pn.contains("hireassistant")) { root.recycle(); continue }
 
-    private fun tryFillNode(root: AccessibilityNodeInfo, text: String): Boolean {
-        val inputs = findEditableNodes(root)
-        for (node in inputs) {
-            try {
-                val args = android.os.Bundle()
-                args.putCharSequence(
-                    AccessibilityNodeInfo.ACTION_ARGUMENT_SET_TEXT_CHARSEQUENCE,
-                    text
-                )
-                node.performAction(AccessibilityNodeInfo.ACTION_SET_TEXT, args)
-                node.performAction(AccessibilityNodeInfo.ACTION_FOCUS)
-                node.recycle()
-                return true
-            } catch (_: Exception) {
-                node.recycle()
+            val inputs = findEditableNodes(root)
+            root.recycle()
+            for (node in inputs) {
+                try {
+                    val args = android.os.Bundle()
+                    args.putCharSequence(
+                        AccessibilityNodeInfo.ACTION_ARGUMENT_SET_TEXT_CHARSEQUENCE,
+                        text
+                    )
+                    node.performAction(AccessibilityNodeInfo.ACTION_SET_TEXT, args)
+                    node.performAction(AccessibilityNodeInfo.ACTION_FOCUS)
+                    node.recycle()
+                    return true
+                } catch (_: Exception) {
+                    node.recycle()
+                }
             }
         }
         return false
