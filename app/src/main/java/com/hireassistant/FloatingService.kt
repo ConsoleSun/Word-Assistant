@@ -201,6 +201,21 @@ class FloatingService : Service() {
             }
         }
 
+        // 输入框开关
+        val inputArea = panel.findViewById<LinearLayout>(R.id.inputArea)
+        val etInput = panel.findViewById<EditText>(R.id.etInput)
+        panel.findViewById<TextView>(R.id.btnInputToggle).setOnClickListener {
+            if (inputArea.visibility == View.VISIBLE) {
+                inputArea.visibility = View.GONE
+                (it as TextView).text = "⌨️"
+                etInput.text.clear()
+            } else {
+                inputArea.visibility = View.VISIBLE
+                (it as TextView).text = "⌨️"
+                etInput.requestFocus()
+            }
+        }
+
         // 粘贴按钮：从剪贴板读取并显示预览
         panel.findViewById<TextView>(R.id.btnPaste).setOnClickListener {
             val cb = getSystemService(CLIPBOARD_SERVICE) as ClipboardManager
@@ -215,7 +230,11 @@ class FloatingService : Service() {
         }
 
         sendBtn.setOnClickListener {
-            if(pastedText.isNotEmpty()) doSend(pastedText)
+            val inputText = etInput.text.toString().trim()
+            if (inputText.isNotEmpty()) {
+                etInput.text.clear()
+                doSend(inputText)
+            } else if(pastedText.isNotEmpty()) doSend(pastedText)
             else {
                 val cb = getSystemService(CLIPBOARD_SERVICE) as ClipboardManager
                 val t = cb.primaryClip?.getItemAt(0)?.text?.toString()?.trim() ?: ""
